@@ -1,6 +1,5 @@
 package dev.qori.githubusers
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import de.hdodenhof.circleimageview.CircleImageView
 typealias OnItemClickCallback = (user: User)->Unit
 
 class ListUserAdapter(
-    private val context: Context,
     private val users: List<User>,
     private val onItemClicked: OnItemClickCallback
 ): RecyclerView.Adapter<ListUserAdapter.ViewHolder>() {

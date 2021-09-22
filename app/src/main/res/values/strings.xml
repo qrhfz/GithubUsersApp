@@ -6,6 +6,9 @@
     <string name="following">Following</string>
     <string name="location">Located in </string>
     <string name="company">Work at</string>
+    <string name="work_icon">Work Icon</string>
+    <string name="share">Share</string>
+    <string name="location_icon">Location Icon</string>
 
     <string-array name="username">
         <item>JakeWharton</item>

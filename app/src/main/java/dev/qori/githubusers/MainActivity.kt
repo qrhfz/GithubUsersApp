@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         rvUser.layoutManager = LinearLayoutManager(this)
 
         val users = LocalUserData(this).all
-        val userAdapter= ListUserAdapter(this, users, moveToUserDetail)
+        val userAdapter= ListUserAdapter(users, moveToUserDetail)
 
         rvUser.adapter = userAdapter
     }
