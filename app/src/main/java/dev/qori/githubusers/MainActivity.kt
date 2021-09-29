@@ -10,19 +10,5 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val rvUser = findViewById<RecyclerView>(R.id.rvUser)
-        rvUser.layoutManager = LinearLayoutManager(this)
-
-        val users = LocalUserData(this).all
-        val userAdapter= ListUserAdapter(users, moveToUserDetail)
-
-        rvUser.adapter = userAdapter
-    }
-
-    private val moveToUserDetail: OnItemClickCallback = { user->
-        val intent = Intent(this, UserDetailActivity::class.java)
-        intent.putExtra(UserDetailActivity.EXTRA_USER, user)
-        startActivity(intent)
     }
 }
