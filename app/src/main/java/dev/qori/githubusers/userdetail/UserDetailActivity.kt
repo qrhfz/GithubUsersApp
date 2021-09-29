@@ -5,11 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import dev.qori.githubusers.databinding.ActivityUserDetailBinding
 import dev.qori.githubusers.models.UserResponse
-import dev.qori.githubusers.userlist.UserListViewModel
 
 class UserDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserDetailBinding
@@ -25,7 +23,7 @@ class UserDetailActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val viewModel: UserDetailViewModel by viewModels { UserDetailViewModelFactory(username!!) }
+        val viewModel: UserDetailViewModel by viewModels { UserDetailViewModelFactory(username) }
 
         viewModel.user.observe(this){
             fillDetail(it)
