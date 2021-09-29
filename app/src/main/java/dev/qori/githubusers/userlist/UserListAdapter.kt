@@ -12,10 +12,10 @@ import dev.qori.githubusers.models.UserResponse
 
 typealias OnItemClickCallback = (user: UserResponse)->Unit
 
-class ListUserAdapter(
-    private val users: List<UserResponse>,
+class UserListAdapter(
+    private var users: List<UserResponse>,
     private val onItemClicked: OnItemClickCallback
-): RecyclerView.Adapter<ListUserAdapter.ViewHolder>() {
+): RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val avatar: CircleImageView = view.findViewById(R.id.civAvatar)
@@ -29,11 +29,11 @@ class ListUserAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = users[position]
-        val (username, name, avatar) = user
+        val (username, _, avatarUrl) = user
 
         holder.username.text = username
         Glide.with(holder.itemView.context)
-            .load(avatar) // URL Gambar
+            .load(avatarUrl) // URL Gambar
             .circleCrop() // Mengubah image menjadi lingkaran
             .into(holder.avatar)
 
@@ -43,5 +43,6 @@ class ListUserAdapter(
     }
 
     override fun getItemCount(): Int = users.size
+
 
 }

@@ -6,30 +6,42 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import dev.qori.githubusers.databinding.ActivityUserDetailBinding
 import dev.qori.githubusers.models.UserResponse
 
 class UserDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserDetailBinding
-    private lateinit var username: String
+    private var username: String? = null
     companion object {
         const val EXTRA_USERNAME = "extra_username"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        username = intent.getStringExtra(EXTRA_USERNAME)!!
+        username = intent.getStringExtra(EXTRA_USERNAME)
         binding = ActivityUserDetailBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
-        val viewModel: UserDetailViewModel by viewModels { UserDetailViewModelFactory(username) }
+        if(username!=null){
+            val viewModel: UserDetailViewModel by viewModels { UserDetailViewModelFactory(username as String) }
 
-        viewModel.user.observe(this){
-            fillDetail(it)
+            viewModel.user.observe(this){
+                fillDetail(it)
+            }
+
+            binding.btnShare.setOnClickListener(onShareButtonClickListener)
+
+            binding.vpUserList.adapter = UserDetailPagerAdapter(this, username as String)
+            TabLayoutMediator(binding.tabLayout, binding.vpUserList){tab, position->
+                tab.text=when(position){
+                    0-> "Followers"
+                    else->"Following"
+                }
+            }.attach()
         }
-
-        binding.btnShare.setOnClickListener(onShareButtonClickListener)
     }
 
     private fun fillDetail(user: UserResponse) {
@@ -42,15 +54,11 @@ class UserDetailActivity : AppCompatActivity() {
         binding.tvDetailFollower.text = user.followers.toString()
         binding.tvDetailFollowing.text = user.following.toString()
         binding.tvDetailRepository.text = user.repos.toString()
-        binding.tvDetailLocation.text = user.location
-        binding.tvDetailCompany.text = user.company
+        binding.tvDetailLocation.text = user.location?:"N/A"
+        binding.tvDetailCompany.text = user.company?:"N/A"
     }
 
     private val onShareButtonClickListener = View.OnClickListener {
-        shareUserProfile()
-    }
-
-    private fun shareUserProfile(){
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, "$username at https://github.com/$username")
@@ -60,7 +68,5 @@ class UserDetailActivity : AppCompatActivity() {
         val shareIntent = Intent.createChooser(sendIntent, "Share this github profile")
         startActivity(shareIntent)
     }
-
-
 
 }

@@ -2,12 +2,11 @@ package dev.qori.githubusers.userlist
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.qori.githubusers.*
@@ -15,7 +14,7 @@ import dev.qori.githubusers.models.UserResponse
 import dev.qori.githubusers.userdetail.UserDetailActivity
 
 
-class UserListFragment : Fragment() {
+open class UserListFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,14 +22,12 @@ class UserListFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_user_list, container, false)
 
-        val viewModel = ViewModelProvider(this).get(UserListViewModel::class.java)
+        val viewModel: UserListViewModel by viewModels { UserListViewModel.UserListViewModelFactory(getUserListType()) }
 
         val rvUser = root.findViewById<RecyclerView>(R.id.rvUser)
         rvUser.layoutManager = LinearLayoutManager(activity)
-
         viewModel.users.observe(viewLifecycleOwner){
-             Log.d(TAG, it.isEmpty().toString())
-             rvUser.adapter = ListUserAdapter(it, moveToUserDetail)
+             rvUser.adapter = UserListAdapter(it, moveToUserDetail)
          }
         return root
     }
@@ -44,4 +41,6 @@ class UserListFragment : Fragment() {
     companion object{
         const val TAG = "UserListFragment"
     }
+
+    open fun getUserListType(): UserListViewModel.UserListType = UserListViewModel.AllUser
 }

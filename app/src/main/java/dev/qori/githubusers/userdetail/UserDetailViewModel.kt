@@ -30,7 +30,7 @@ class UserDetailViewModel(private val username:String): ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        _user.value = responseBody!!
+                        _user.value = responseBody as UserResponse
                     }
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
