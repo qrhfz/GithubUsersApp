@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="dev.qori.githubusers" >
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GithubUsers" >
         <activity
-            android:name=".UserDetailActivity"
+            android:name=".userdetail.UserDetailActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

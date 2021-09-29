@@ -1,22 +1,24 @@
-package dev.qori.githubusers
+package dev.qori.githubusers.userlist
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
+import dev.qori.githubusers.R
+import dev.qori.githubusers.models.UserResponse
 
-typealias OnItemClickCallback = (user: User)->Unit
+typealias OnItemClickCallback = (user: UserResponse)->Unit
 
 class ListUserAdapter(
-    private val users: List<User>,
+    private val users: List<UserResponse>,
     private val onItemClicked: OnItemClickCallback
 ): RecyclerView.Adapter<ListUserAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val avatar: CircleImageView = view.findViewById(R.id.civAvatar)
-        val name: TextView = view.findViewById(R.id.tvName)
         val username: TextView = view.findViewById(R.id.tvUsername)
     }
 
@@ -30,8 +32,10 @@ class ListUserAdapter(
         val (username, name, avatar) = user
 
         holder.username.text = username
-        holder.name.text = name
-        holder.avatar.setImageResource(avatar)
+        Glide.with(holder.itemView.context)
+            .load(avatar) // URL Gambar
+            .circleCrop() // Mengubah image menjadi lingkaran
+            .into(holder.avatar)
 
         holder.itemView.setOnClickListener {
             onItemClicked(user)
