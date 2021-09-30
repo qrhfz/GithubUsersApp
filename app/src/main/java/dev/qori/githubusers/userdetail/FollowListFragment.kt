@@ -27,6 +27,7 @@ class FollowListFragment(): UserListFragment() {
         private const val ARG_USERNAME = "ARG_USERNAME"
         private const val ARG_LIST_CONTENT= "ARG_LIST_CONTENT"
 
+        @JvmStatic
         fun newInstance(username: String, listType: ListType) = FollowListFragment().apply {
             arguments = bundleOf(ARG_USERNAME to username, ARG_LIST_CONTENT to listType)
         }

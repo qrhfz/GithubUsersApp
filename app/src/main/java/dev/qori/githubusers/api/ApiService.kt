@@ -1,5 +1,6 @@
 package dev.qori.githubusers.api
 
+import dev.qori.githubusers.models.SearchResponse
 import dev.qori.githubusers.models.UserResponse
 import retrofit2.Call
 import retrofit2.http.GET
@@ -26,8 +27,8 @@ interface ApiService {
         @Path("username") username: String
     ): Call<List<UserResponse>>
 
-    @GET("users")
+    @GET("search/users")
     fun searchUser(
-        @Query("username") username: String
-    ): Call<List<UserResponse>>
+        @Query("q") username: String
+    ): Call<SearchResponse>
 }

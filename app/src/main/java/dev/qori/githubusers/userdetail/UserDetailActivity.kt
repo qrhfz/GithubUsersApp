@@ -3,11 +3,14 @@ package dev.qori.githubusers.userdetail
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import dev.qori.githubusers.R
 import dev.qori.githubusers.databinding.ActivityUserDetailBinding
 import dev.qori.githubusers.models.UserResponse
 
@@ -68,5 +71,7 @@ class UserDetailActivity : AppCompatActivity() {
         val shareIntent = Intent.createChooser(sendIntent, "Share this github profile")
         startActivity(shareIntent)
     }
+
+
 
 }

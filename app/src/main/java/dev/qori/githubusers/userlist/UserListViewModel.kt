@@ -14,7 +14,7 @@ import retrofit2.Response
 typealias MutableUserListLiveData = MutableLiveData<List<UserResponse>>
 typealias UserListLiveData = LiveData<List<UserResponse>>
 
-class UserListViewModel(private val userListType:UserListType): ViewModel() {
+class UserListViewModel(userListType:UserListType): ViewModel() {
     private val _users = MutableUserListLiveData()
     val users: UserListLiveData = _users
     private val _isLoading = MutableLiveData<Boolean>()
