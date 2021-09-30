@@ -14,7 +14,9 @@ import dev.qori.githubusers.models.UserResponse
 import dev.qori.githubusers.userdetail.UserDetailActivity
 
 
-open class UserListFragment : Fragment() {
+abstract class UserListFragment : Fragment() {
+
+    private var viewModel:UserListViewModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,11 +24,11 @@ open class UserListFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_user_list, container, false)
 
-        val viewModel: UserListViewModel by viewModels { UserListViewModel.UserListViewModelFactory(getUserListType()) }
+        viewModel = setViewModel()
 
         val rvUser = root.findViewById<RecyclerView>(R.id.rvUser)
         rvUser.layoutManager = LinearLayoutManager(activity)
-        viewModel.users.observe(viewLifecycleOwner){
+        viewModel?.users?.observe(viewLifecycleOwner){
              rvUser.adapter = UserListAdapter(it, moveToUserDetail)
          }
         return root
@@ -38,9 +40,10 @@ open class UserListFragment : Fragment() {
         startActivity(intent)
     }
 
-    companion object{
-        const val TAG = "UserListFragment"
-    }
+    abstract fun setViewModel():UserListViewModel
 
-    open fun getUserListType(): UserListViewModel.UserListType = UserListViewModel.AllUser
+    override fun onDestroy() {
+        viewModel = null
+        super.onDestroy()
+    }
 }

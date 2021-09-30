@@ -6,15 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dev.qori.githubusers.R
+import dev.qori.githubusers.userlist.UserListFragment
+import dev.qori.githubusers.userlist.UserListViewModel
 
-class SearchResultFragment : Fragment() {
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search_result, container, false)
+class SearchResultFragment : UserListFragment(){
+    override fun setViewModel(): UserListViewModel {
+        TODO("Not yet implemented")
     }
 
 }

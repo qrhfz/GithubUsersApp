@@ -2,12 +2,14 @@ package dev.qori.githubusers.userdetail
 
 import android.content.Context
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import dev.qori.githubusers.userlist.UserListFragment
 import dev.qori.githubusers.userlist.UserListViewModel
 
 class FollowListFragment(): UserListFragment() {
     private lateinit var username: String
     private lateinit var listType: ListType
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -18,9 +20,10 @@ class FollowListFragment(): UserListFragment() {
             listType = it as ListType
         }
     }
-    override fun getUserListType(): UserListViewModel.UserListType = when(listType){
-        ListType.FOLLOWERS -> UserListViewModel.UserFollower(username)
-        ListType.FOLLOWING -> UserListViewModel.UserFollowing(username)
+
+    override fun setViewModel(): UserListViewModel {
+        val viewModel: UserListViewModel by viewModels { FollowListViewModelFactory(username, listType) }
+        return viewModel
     }
 
     companion object{

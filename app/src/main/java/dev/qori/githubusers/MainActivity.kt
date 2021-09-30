@@ -13,12 +13,12 @@ import dev.qori.githubusers.userlist.UserListFragment
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                add<UserListFragment>(R.id.fcvUserList)
-            }
-        }
+//        if (savedInstanceState == null) {
+//            supportFragmentManager.commit {
+//                setReorderingAllowed(true)
+//                add<UserListFragment>(R.id.fcvUserList)
+//            }
+//        }
 
         setContentView(R.layout.activity_main)
 
