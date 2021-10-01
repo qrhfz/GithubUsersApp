@@ -1,14 +1,8 @@
 package dev.qori.githubusers.search
 
 import android.content.Context
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+
 import androidx.fragment.app.viewModels
-import dev.qori.githubusers.R
-import dev.qori.githubusers.userdetail.FollowListViewModel
 import dev.qori.githubusers.userlist.UserListFragment
 import dev.qori.githubusers.userlist.UserListViewModel
 
@@ -17,6 +11,7 @@ class SearchResultFragment : UserListFragment(){
     override fun onAttach(context: Context) {
         super.onAttach(context)
         query = requireArguments().getString(ARG_QUERY)?:""
+        activity?.title = "Results for \"$query\""
 
     }
     override fun getViewModel(): UserListViewModel {
@@ -28,5 +23,6 @@ class SearchResultFragment : UserListFragment(){
         const val ARG_QUERY = "ARG_QUERY"
         private const val TAG = "SearchResultFragment"
     }
+
 
 }

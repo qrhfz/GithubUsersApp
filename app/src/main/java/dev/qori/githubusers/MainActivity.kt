@@ -8,13 +8,10 @@ import android.util.Log
 import android.view.Menu
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
 import dev.qori.githubusers.allusers.AllUserFragment
 import dev.qori.githubusers.search.SearchResultFragment
-import dev.qori.githubusers.userlist.UserListFragment
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,11 +63,9 @@ class MainActivity : AppCompatActivity() {
         if(supportFragmentManager.findFragmentByTag("FRAGMENT_SEARCH")!=null){
             Log.d("MainActivity", "Im on fragment search")
             supportFragmentManager.popBackStack("ALL_TO_SEARCH", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            title = resources.getString(R.string.app_name)
         }else{
             super.onBackPressed()
         }
     }
-
-
-
 }

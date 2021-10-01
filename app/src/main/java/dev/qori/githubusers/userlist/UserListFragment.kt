@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.qori.githubusers.*
@@ -21,14 +22,21 @@ abstract class UserListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_user_list, container, false)
-
         viewModel = getViewModel()
-
         val rvUser = root.findViewById<RecyclerView>(R.id.rvUser)
+        val progressBar = root.findViewById<ProgressBar>(R.id.progressBar)
         rvUser.layoutManager = LinearLayoutManager(activity)
         viewModel?.users?.observe(viewLifecycleOwner){
              rvUser.adapter = UserListAdapter(it, moveToUserDetail)
          }
+
+        viewModel?.isLoading?.observe(viewLifecycleOwner){
+            if(it){
+                progressBar.visibility = View.VISIBLE
+            }else{
+                progressBar.visibility = View.GONE
+            }
+        }
         return root
     }
 
