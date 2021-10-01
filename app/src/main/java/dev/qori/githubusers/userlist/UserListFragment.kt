@@ -6,11 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.qori.githubusers.*
-import dev.qori.githubusers.models.UserResponse
 import dev.qori.githubusers.userdetail.UserDetailActivity
 
 
@@ -24,7 +22,7 @@ abstract class UserListFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_user_list, container, false)
 
-        viewModel = setViewModel()
+        viewModel = getViewModel()
 
         val rvUser = root.findViewById<RecyclerView>(R.id.rvUser)
         rvUser.layoutManager = LinearLayoutManager(activity)
@@ -40,7 +38,7 @@ abstract class UserListFragment : Fragment() {
         startActivity(intent)
     }
 
-    abstract fun setViewModel():UserListViewModel
+    abstract fun getViewModel():UserListViewModel
 
     override fun onDestroy() {
         viewModel = null

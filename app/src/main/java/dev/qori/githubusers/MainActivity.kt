@@ -4,24 +4,33 @@ import android.app.SearchManager
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import dev.qori.githubusers.allusers.AllUserFragment
+import dev.qori.githubusers.search.SearchResultFragment
 import dev.qori.githubusers.userlist.UserListFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        if (savedInstanceState == null) {
-//            supportFragmentManager.commit {
-//                setReorderingAllowed(true)
-//                add<UserListFragment>(R.id.fcvUserList)
-//            }
-//        }
+        val mFragmentManager = supportFragmentManager
+        val mHomeFragment = AllUserFragment()
+        val fragment = mFragmentManager.findFragmentByTag(AllUserFragment::class.java.simpleName)
+
+        if(fragment !is AllUserFragment){
+            mFragmentManager
+                .beginTransaction()
+                .add(R.id.frame_container, mHomeFragment, AllUserFragment::class.java.simpleName)
+                .commit()
+        }
 
         setContentView(R.layout.activity_main)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -41,14 +50,27 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
         })
+
         return true
     }
 
     fun showSearchFragment(query: String){
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-//            add<SearchFragment>(R.id.fcvUserList,"", bundleOf(SearchFragment.ARG_QUERY to query))
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.frame_container,SearchResultFragment::class.java, bundleOf(SearchResultFragment.ARG_QUERY to query),"FRAGMENT_SEARCH")
+            addToBackStack("ALL_TO_SEARCH")
+            commit()
         }
     }
+
+    override fun onBackPressed() {
+        if(supportFragmentManager.findFragmentByTag("FRAGMENT_SEARCH")!=null){
+            Log.d("MainActivity", "Im on fragment search")
+            supportFragmentManager.popBackStack("ALL_TO_SEARCH", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }else{
+            super.onBackPressed()
+        }
+    }
+
+
 
 }

@@ -21,8 +21,8 @@ class FollowListFragment(): UserListFragment() {
         }
     }
 
-    override fun setViewModel(): UserListViewModel {
-        val viewModel: UserListViewModel by viewModels { FollowListViewModelFactory(username, listType) }
+    override fun getViewModel(): UserListViewModel {
+        val viewModel: UserListViewModel by viewModels { FollowListViewModel.Factory(username, listType) }
         return viewModel
     }
 

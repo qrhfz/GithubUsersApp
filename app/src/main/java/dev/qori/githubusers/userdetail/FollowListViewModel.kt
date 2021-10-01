@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dev.qori.githubusers.api.ApiConfig
 import dev.qori.githubusers.models.UserResponse
+import dev.qori.githubusers.search.SearchResultViewModel
 import dev.qori.githubusers.userlist.UserListViewModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -49,8 +50,15 @@ class FollowListViewModel(private val username:String, private val listType: Fol
         private const val TAG = "FollowListViewModel"
     }
 
+    @Suppress("UNCHECKED_CAST")
+    class Factory(private val username:String, private val listType: FollowListFragment.ListType): ViewModelProvider.NewInstanceFactory(){
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            if(modelClass.isAssignableFrom(FollowListViewModel::class.java)){
+                return FollowListViewModel(username,listType) as T
+            }
+            throw IllegalAccessException("ViewModel class not found")
+        }
+    }
+
 }
 
-class FollowListViewModelFactory(private val username:String, private val listType: FollowListFragment.ListType): ViewModelProvider.NewInstanceFactory(){
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T = FollowListViewModel(username,listType) as T
-}
