@@ -31,8 +31,20 @@ class UserDetailActivity : AppCompatActivity() {
         if(username!=null){
             val viewModel: UserDetailViewModel by viewModels { UserDetailViewModelFactory(username as String) }
 
-            viewModel.user.observe(this){
-                fillDetail(it)
+            viewModel.user.observe(this){userData->
+                fillDetail(userData)
+            }
+
+            viewModel.isLoading.observe(this){isLoading->
+                if(isLoading){
+                    binding.clUserData.visibility = View.INVISIBLE
+                    binding.progressBar2.visibility = View.VISIBLE
+
+                }else{
+                    binding.clUserData.visibility = View.VISIBLE
+                    binding.progressBar2.visibility = View.GONE
+
+                }
             }
 
             binding.btnShare.setOnClickListener(onShareButtonClickListener)
@@ -44,6 +56,8 @@ class UserDetailActivity : AppCompatActivity() {
                     else->"Following"
                 }
             }.attach()
+
+
         }
     }
 

@@ -3,7 +3,6 @@ package dev.qori.githubusers.allusers
 import android.util.Log
 import dev.qori.githubusers.api.ApiConfig
 import dev.qori.githubusers.models.UserResponse
-import dev.qori.githubusers.userdetail.FollowListViewModel
 import dev.qori.githubusers.userlist.UserListViewModel
 import retrofit2.Call
 import retrofit2.Callback

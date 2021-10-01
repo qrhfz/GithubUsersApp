@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
     fun showSearchFragment(query: String){
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.frame_container,SearchResultFragment::class.java, bundleOf(SearchResultFragment.ARG_QUERY to query),"FRAGMENT_SEARCH")
-            addToBackStack("ALL_TO_SEARCH")
+            addToBackStack(ALL_TO_SEARCH)
             commit()
         }
     }
@@ -62,10 +62,15 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if(supportFragmentManager.findFragmentByTag("FRAGMENT_SEARCH")!=null){
             Log.d("MainActivity", "Im on fragment search")
-            supportFragmentManager.popBackStack("ALL_TO_SEARCH", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            //supaya kalau back bakal pop hasil pencarian dan kembali menampilkan semua user
+            supportFragmentManager.popBackStack(ALL_TO_SEARCH, FragmentManager.POP_BACK_STACK_INCLUSIVE)
             title = resources.getString(R.string.app_name)
         }else{
             super.onBackPressed()
         }
+    }
+
+    companion object{
+        private const val ALL_TO_SEARCH = "ALL_TO_SEARCH"
     }
 }

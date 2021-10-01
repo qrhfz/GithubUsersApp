@@ -5,8 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dev.qori.githubusers.api.ApiConfig
 import dev.qori.githubusers.models.SearchResponse
-import dev.qori.githubusers.userdetail.FollowListFragment
-import dev.qori.githubusers.userdetail.FollowListViewModel
 import dev.qori.githubusers.userlist.UserListViewModel
 import retrofit2.Call
 import retrofit2.Callback

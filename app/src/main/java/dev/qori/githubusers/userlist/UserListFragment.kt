@@ -6,25 +6,27 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import dev.qori.githubusers.*
+import dev.qori.githubusers.databinding.FragmentUserListBinding
 import dev.qori.githubusers.userdetail.UserDetailActivity
 
 
 abstract class UserListFragment : Fragment() {
-
+    private var _binding: FragmentUserListBinding? = null
+    private val binding get() = _binding!!
     private var viewModel:UserListViewModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_user_list, container, false)
+        _binding = FragmentUserListBinding.inflate(inflater, container, false)
+        val view = binding.root
+
         viewModel = getViewModel()
-        val rvUser = root.findViewById<RecyclerView>(R.id.rvUser)
-        val progressBar = root.findViewById<ProgressBar>(R.id.progressBar)
+
+        val rvUser = binding.rvUser
+        val progressBar = binding.progressBar
         rvUser.layoutManager = LinearLayoutManager(activity)
         viewModel?.users?.observe(viewLifecycleOwner){
              rvUser.adapter = UserListAdapter(it, moveToUserDetail)
@@ -37,7 +39,7 @@ abstract class UserListFragment : Fragment() {
                 progressBar.visibility = View.GONE
             }
         }
-        return root
+        return view
     }
 
     private val moveToUserDetail: OnItemClickCallback = { user->
@@ -49,7 +51,7 @@ abstract class UserListFragment : Fragment() {
     abstract fun getViewModel():UserListViewModel
 
     override fun onDestroy() {
-        viewModel = null
+        _binding = null
         super.onDestroy()
     }
 }
