@@ -6,7 +6,7 @@ import androidx.fragment.app.viewModels
 import dev.qori.githubusers.userlist.UserListFragment
 import dev.qori.githubusers.userlist.UserListViewModel
 
-class FollowListFragment(): UserListFragment() {
+class FollowListFragment: UserListFragment() {
     private lateinit var username: String
     private lateinit var listType: ListType
 

@@ -2,17 +2,26 @@ package dev.qori.githubusers
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ViewModelProvider
 import dev.qori.githubusers.allusers.AllUserFragment
 import dev.qori.githubusers.search.SearchResultFragment
+import dev.qori.githubusers.settings.SettingPreferences
+import dev.qori.githubusers.settings.SettingsActivity
+import dev.qori.githubusers.settings.SettingsViewModel
 
-
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +37,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         setContentView(R.layout.activity_main)
+
+        val pref = SettingPreferences.getInstance(dataStore)
+
+        val viewModel = ViewModelProvider(this, SettingsViewModel.Factory(pref)).get(
+            SettingsViewModel::class.java
+        )
+
+        viewModel.getThemeSettings().observe(this){
+                AppCompatDelegate.setDefaultNightMode(
+                    if(it) AppCompatDelegate.MODE_NIGHT_YES
+                    else AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -48,6 +69,12 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        menu.findItem(R.id.settings).setOnMenuItemClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+            return@setOnMenuItemClickListener true
+        }
+
         return true
     }
 
@@ -58,6 +85,8 @@ class MainActivity : AppCompatActivity() {
             commit()
         }
     }
+
+
 
     override fun onBackPressed() {
         if(supportFragmentManager.findFragmentByTag("FRAGMENT_SEARCH")!=null){

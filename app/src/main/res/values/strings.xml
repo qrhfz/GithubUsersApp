@@ -120,4 +120,5 @@
     <string name="follower_following">This user\'s followers and following</string>
     <string name="activate_night_mode">Activate Night Mode</string>
     <string name="night_mode">Night Mode</string>
+    <string name="settings">settings</string>
 </resources>
