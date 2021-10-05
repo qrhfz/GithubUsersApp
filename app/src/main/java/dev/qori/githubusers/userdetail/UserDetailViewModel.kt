@@ -16,13 +16,19 @@ import retrofit2.Response
 
 class UserDetailViewModel(application: Application, private val username: String) :
     ViewModel() {
+    private val favoriteRepository = FavoriteRepository(application)
+
     private var _isFavorite: MutableLiveData<Boolean> = MutableLiveData()
     var isFavorite: LiveData<Boolean> = _isFavorite
-    private val favoriteRepository = FavoriteRepository(application)
+
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
+
     private val _user = MutableLiveData<UserResponse>()
     val user: LiveData<UserResponse> = _user
+
+    private val _errorMessage= MutableLiveData<String>()
+    val errorMessage: LiveData<String> = _errorMessage
 
     private fun getUser() {
         _isLoading.value = true
@@ -43,6 +49,7 @@ class UserDetailViewModel(application: Application, private val username: String
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 _isLoading.value = false
                 Log.e(TAG, "onFailure: ${t.message}")
+                _errorMessage.value = t.message
             }
         })
     }

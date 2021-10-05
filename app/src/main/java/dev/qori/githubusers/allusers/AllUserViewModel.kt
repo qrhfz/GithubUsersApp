@@ -32,6 +32,7 @@ class AllUserViewModel : UserListViewModel() {
             override fun onFailure(call: Call<List<UserResponse>>, t: Throwable) {
                 mIsLoading.value = false
                 Log.e(TAG, "onFailure: ${t.message}")
+                mErrorMessage.value = t.message
             }
         })
     }

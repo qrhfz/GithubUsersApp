@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.qori.githubusers.databinding.FragmentUserListBinding
@@ -28,6 +29,7 @@ abstract class UserListFragment : Fragment() {
         val rvUser = binding.rvUser
         val progressBar = binding.progressBar
         rvUser.layoutManager = LinearLayoutManager(activity)
+
         viewModel?.users?.observe(viewLifecycleOwner) {
             rvUser.adapter = UserListAdapter(it, moveToUserDetail)
         }
@@ -37,6 +39,12 @@ abstract class UserListFragment : Fragment() {
                 progressBar.visibility = View.VISIBLE
             } else {
                 progressBar.visibility = View.GONE
+            }
+        }
+
+        viewModel?.errorMessage?.observe(viewLifecycleOwner){err->
+            if(err.isNotEmpty()){
+                Toast.makeText(activity, err, Toast.LENGTH_LONG).show()
             }
         }
         return view

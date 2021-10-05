@@ -38,6 +38,7 @@ class SearchResultViewModel(private val query: String) : UserListViewModel() {
             override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
                 mIsLoading.value = false
                 Log.e(TAG, "onFailure: ${t.message}")
+                mErrorMessage.value = t.message
             }
         })
     }
