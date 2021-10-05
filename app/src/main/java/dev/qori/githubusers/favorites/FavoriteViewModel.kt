@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asFlow
 import dev.qori.githubusers.api.ApiConfig
 import dev.qori.githubusers.models.UserResponse
+import dev.qori.githubusers.userdetail.FollowListViewModel
 import dev.qori.githubusers.userlist.MutableUserListLiveData
 import dev.qori.githubusers.userlist.UserListViewModel
 import retrofit2.Call
@@ -37,8 +38,15 @@ class FavoriteViewModel(application: Application):UserListViewModel() {
         getUsers()
     }
 
+    @Suppress("UNCHECKED_CAST")
     class Factory(private val application: Application): ViewModelProvider.NewInstanceFactory(){
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T = FavoriteViewModel(application) as T
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            if(modelClass.isAssignableFrom(FavoriteViewModel::class.java)){
+            return FavoriteViewModel(application) as T}
+            else{
+                throw IllegalAccessException("ViewModel class not found")
+            }
+        }
     }
 
     private fun fetchUser(username: String, responseCallback: (UserResponse?)->Unit){
