@@ -16,7 +16,7 @@ abstract class UserListViewModel : ViewModel() {
     protected val mIsLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = mIsLoading
 
-    protected val mErrorMessage= MutableLiveData<String>()
+    protected val mErrorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = mErrorMessage
 
     abstract fun getUsers()

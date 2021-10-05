@@ -42,8 +42,8 @@ abstract class UserListFragment : Fragment() {
             }
         }
 
-        viewModel?.errorMessage?.observe(viewLifecycleOwner){err->
-            if(err.isNotEmpty()){
+        viewModel?.errorMessage?.observe(viewLifecycleOwner) { err ->
+            if (err.isNotEmpty()) {
                 Toast.makeText(activity, err, Toast.LENGTH_LONG).show()
             }
         }

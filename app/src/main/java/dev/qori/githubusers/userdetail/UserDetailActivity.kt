@@ -81,13 +81,13 @@ class UserDetailActivity : AppCompatActivity() {
             .load(user.avatarUrl) // URL Gambar
             .circleCrop() // Mengubah image menjadi lingkaran
             .into(binding.civDetailAvatar)
-        binding.tvDetailName.text = if(user.name.isNotEmpty()) user.name else "-"
+        binding.tvDetailName.text = if (user.name.isNotEmpty()) user.name else "-"
         binding.tvDetailUsername.text = user.username
         binding.tvDetailFollower.text = user.followers.toString()
         binding.tvDetailFollowing.text = user.following.toString()
         binding.tvDetailRepository.text = user.repos.toString()
-        binding.tvDetailLocation.text = if(user.location.isNotEmpty()) user.location else "-"
-        binding.tvDetailCompany.text = if(user.company.isNotEmpty()) user.company else "-"
+        binding.tvDetailLocation.text = if (user.location.isNotEmpty()) user.location else "-"
+        binding.tvDetailCompany.text = if (user.company.isNotEmpty()) user.company else "-"
     }
 
 
