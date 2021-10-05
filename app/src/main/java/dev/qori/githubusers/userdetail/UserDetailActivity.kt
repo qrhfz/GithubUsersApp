@@ -7,12 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import dev.qori.githubusers.databinding.ActivityUserDetailBinding
+import dev.qori.githubusers.favorites.Favorite
+import dev.qori.githubusers.favorites.FavoriteRepository
 import dev.qori.githubusers.models.UserResponse
 
 class UserDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserDetailBinding
-//    private var username: String? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +21,7 @@ class UserDetailActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        val favoriteRepository = FavoriteRepository(application)
         userData?.let { user->
             fillDetail(user)
 
@@ -42,6 +43,10 @@ class UserDetailActivity : AppCompatActivity() {
                     else -> "Following"
                 }
             }.attach()
+
+            binding.floatingActionButton.setOnClickListener {
+                favoriteRepository.insert(Favorite(user.username))
+            }
         }
 
 
