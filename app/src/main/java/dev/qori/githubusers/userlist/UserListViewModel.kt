@@ -9,7 +9,7 @@ import dev.qori.githubusers.models.UserResponse
 typealias MutableUserListLiveData = MutableLiveData<List<UserResponse>>
 typealias UserListLiveData = LiveData<List<UserResponse>>
 
-abstract class UserListViewModel: ViewModel() {
+abstract class UserListViewModel : ViewModel() {
     protected val mUsers = MutableUserListLiveData()
     val users: UserListLiveData = mUsers
     protected val mIsLoading = MutableLiveData<Boolean>()

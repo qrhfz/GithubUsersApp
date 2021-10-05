@@ -12,11 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GithubUsers">
         <activity
+            android:name=".favorites.FavoriteActivity"
+            android:exported="true" />
+        <activity
             android:name=".settings.SettingsActivity"
             android:exported="true" />
         <activity
             android:name=".userdetail.UserDetailActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:label="User Profile" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

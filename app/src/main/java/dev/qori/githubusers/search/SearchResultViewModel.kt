@@ -10,7 +10,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SearchResultViewModel(private val query:String): UserListViewModel() {
+class SearchResultViewModel(private val query: String) : UserListViewModel() {
     init {
         getUsers()
     }
@@ -42,14 +42,14 @@ class SearchResultViewModel(private val query:String): UserListViewModel() {
         })
     }
 
-    companion object{
+    companion object {
         private const val TAG = "FollowListViewModel"
     }
 
     @Suppress("UNCHECKED_CAST")
-    class Factory(private val query:String): ViewModelProvider.NewInstanceFactory(){
+    class Factory(private val query: String) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(SearchResultViewModel::class.java)){
+            if (modelClass.isAssignableFrom(SearchResultViewModel::class.java)) {
                 return SearchResultViewModel(query) as T
             }
             throw IllegalAccessException("ViewModel class not found")

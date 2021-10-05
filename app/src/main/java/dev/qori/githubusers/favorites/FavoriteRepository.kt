@@ -6,20 +6,24 @@ import dev.qori.githubusers.GithubUsersDatabase
 import java.util.concurrent.Executors
 
 class FavoriteRepository(application: Application) {
-    private val favoriteDao:FavoriteDao = GithubUsersDatabase.getDatabase(application).favoriteDao()
+    private val favoriteDao: FavoriteDao =
+        GithubUsersDatabase.getDatabase(application).favoriteDao()
     private val executorService = Executors.newSingleThreadExecutor()
 
     fun getAllFavorites() = favoriteDao.getAllFavorites()
-    fun insert(favorite: Favorite){
+
+    fun getFavorite(username: String) = favoriteDao.getFavorite(username)
+
+    fun insert(favorite: Favorite) {
         Log.d(TAG, "Insert username : ${favorite.username}")
-        executorService.execute{favoriteDao.insert(favorite)}
+        executorService.execute { favoriteDao.insert(favorite) }
     }
 
     fun delete(favorite: Favorite) {
         executorService.execute { favoriteDao.delete(favorite) }
     }
 
-    companion object{
+    companion object {
         private const val TAG = "FavoriteRepository"
     }
 }

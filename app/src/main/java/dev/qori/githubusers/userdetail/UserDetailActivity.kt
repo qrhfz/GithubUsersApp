@@ -1,14 +1,14 @@
 package dev.qori.githubusers.userdetail
 
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
-import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import dev.qori.githubusers.databinding.ActivityUserDetailBinding
-import dev.qori.githubusers.favorites.Favorite
-import dev.qori.githubusers.favorites.FavoriteRepository
 import dev.qori.githubusers.models.UserResponse
 
 class UserDetailActivity : AppCompatActivity() {
@@ -16,40 +16,64 @@ class UserDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val userData = intent.getParcelableExtra<UserResponse>(EXTRA_USER)
+        val username = intent.getStringExtra(EXTRA_USER)
         binding = ActivityUserDetailBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
-        val favoriteRepository = FavoriteRepository(application)
-        userData?.let { user->
+        val viewModel: UserDetailViewModel by viewModels {
+            UserDetailViewModel.Factory(
+                application,
+                username ?: ""
+            )
+        }
+
+        viewModel.user.observe(this) { user ->
             fillDetail(user)
+        }
 
-            binding.btnShare.setOnClickListener {
-                val sendIntent: Intent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, "${user.username} at https://github.com/${user.username} ")
-                    type = "text/plain"
-                }
+        binding.btnShare.setOnClickListener {
+            username?.let { it1 -> share(it1) }
+        }
 
-                val shareIntent = Intent.createChooser(sendIntent, "Share this github profile")
-                startActivity(shareIntent)
+        binding.vpUserList.adapter = username?.let { UserDetailPagerAdapter(this, it) }
+
+        TabLayoutMediator(binding.tabLayout, binding.vpUserList) { tab, position ->
+            tab.text = when (position) {
+                0 -> "Followers"
+                else -> "Following"
             }
+        }.attach()
 
-            binding.vpUserList.adapter = UserDetailPagerAdapter(this, user.username as String)
-            TabLayoutMediator(binding.tabLayout, binding.vpUserList) { tab, position ->
-                tab.text = when (position) {
-                    0 -> "Followers"
-                    else -> "Following"
-                }
-            }.attach()
-
-            binding.floatingActionButton.setOnClickListener {
-                favoriteRepository.insert(Favorite(user.username))
+        viewModel.isFavorite.observe(this) {
+            if (it) {
+                binding.floatingActionButton.imageTintList =
+                    ColorStateList.valueOf(Color.rgb(255, 0, 0))
+            } else {
+                binding.floatingActionButton.imageTintList =
+                    ColorStateList.valueOf(Color.rgb(75, 75, 75))
             }
         }
 
+        binding.floatingActionButton.setOnClickListener {
+            username?.let { it1 -> viewModel.toggleFavorite(it1) }
+        }
 
+
+    }
+
+    private fun share(username: String) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(
+                Intent.EXTRA_TEXT,
+                "$username at https://github.com/$username "
+            )
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, "Share this github profile")
+        startActivity(shareIntent)
     }
 
     private fun fillDetail(user: UserResponse) {
@@ -57,13 +81,13 @@ class UserDetailActivity : AppCompatActivity() {
             .load(user.avatarUrl) // URL Gambar
             .circleCrop() // Mengubah image menjadi lingkaran
             .into(binding.civDetailAvatar)
-        binding.tvDetailName.text = user.name
+        binding.tvDetailName.text = if(user.name.isNotEmpty()) user.name else "-"
         binding.tvDetailUsername.text = user.username
         binding.tvDetailFollower.text = user.followers.toString()
         binding.tvDetailFollowing.text = user.following.toString()
         binding.tvDetailRepository.text = user.repos.toString()
-        binding.tvDetailLocation.text = user.location ?: "N/A"
-        binding.tvDetailCompany.text = user.company ?: "N/A"
+        binding.tvDetailLocation.text = if(user.location.isNotEmpty()) user.location else "-"
+        binding.tvDetailCompany.text = if(user.company.isNotEmpty()) user.company else "-"
     }
 
 

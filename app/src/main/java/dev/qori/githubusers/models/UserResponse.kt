@@ -1,32 +1,29 @@
 package dev.qori.githubusers.models
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
 data class UserResponse(
     @field:SerializedName("login")
-    val username: String? = null,
+    val username: String,
 
     @field:SerializedName("name")
-    val name: String? = null,
+    val name: String,
 
     @field:SerializedName("avatar_url")
-    val avatarUrl: String? = null,
+    val avatarUrl: String,
 
     @field:SerializedName("public_repos")
-    val repos: Int? = null,
+    val repos: Int,
 
     @field:SerializedName("followers")
-    val followers: Int? = null,
+    val followers: Int,
 
     @field:SerializedName("following")
-    val following: Int? = null,
+    val following: Int,
 
     @field:SerializedName("company")
-    val company: String? = null,
+    val company: String,
 
     @field:SerializedName("location")
-    val location: String? = null,
-) : Parcelable
+    val location: String,
+)

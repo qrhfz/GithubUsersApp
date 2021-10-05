@@ -1,5 +1,6 @@
 package dev.qori.githubusers.userlist
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,12 +11,12 @@ import de.hdodenhof.circleimageview.CircleImageView
 import dev.qori.githubusers.R
 import dev.qori.githubusers.models.UserResponse
 
-typealias OnItemClickCallback = (user: UserResponse)->Unit
+typealias OnItemClickCallback = (user: UserResponse) -> Unit
 
 class UserListAdapter(
     private var users: List<UserResponse>,
     private val onItemClicked: OnItemClickCallback
-): RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val avatar: CircleImageView = view.findViewById(R.id.civAvatar)
@@ -23,21 +24,22 @@ class UserListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.list_user_item, parent, false)
+        val view: View =
+            LayoutInflater.from(parent.context).inflate(R.layout.list_user_item, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = users[position]
-        val (username, _, avatarUrl) = user
 
-        holder.username.text = username
+        holder.username.text = user.username
         Glide.with(holder.itemView.context)
-            .load(avatarUrl) // URL Gambar
-            .circleCrop() // Mengubah image menjadi lingkaran
+            .load(user.avatarUrl)
+            .circleCrop()
             .into(holder.avatar)
 
         holder.itemView.setOnClickListener {
+            Log.d("UserListAdapater", user.toString())
             onItemClicked(user)
         }
     }

@@ -6,7 +6,7 @@ import androidx.fragment.app.viewModels
 import dev.qori.githubusers.userlist.UserListFragment
 import dev.qori.githubusers.userlist.UserListViewModel
 
-class FollowListFragment: UserListFragment() {
+class FollowListFragment : UserListFragment() {
     private lateinit var username: String
     private lateinit var listType: ListType
 
@@ -22,13 +22,18 @@ class FollowListFragment: UserListFragment() {
     }
 
     override fun getViewModel(): UserListViewModel {
-        val viewModel: UserListViewModel by viewModels { FollowListViewModel.Factory(username, listType) }
+        val viewModel: UserListViewModel by viewModels {
+            FollowListViewModel.Factory(
+                username,
+                listType
+            )
+        }
         return viewModel
     }
 
-    companion object{
+    companion object {
         private const val ARG_USERNAME = "ARG_USERNAME"
-        private const val ARG_LIST_CONTENT= "ARG_LIST_CONTENT"
+        private const val ARG_LIST_CONTENT = "ARG_LIST_CONTENT"
 
         @JvmStatic
         fun newInstance(username: String, listType: ListType) = FollowListFragment().apply {
@@ -36,7 +41,7 @@ class FollowListFragment: UserListFragment() {
         }
     }
 
-    enum class ListType{
+    enum class ListType {
         FOLLOWERS, FOLLOWING
     }
 }

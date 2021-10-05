@@ -8,7 +8,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AllUserViewModel: UserListViewModel() {
+class AllUserViewModel : UserListViewModel() {
     override fun getUsers() {
         val client = ApiConfig.getApiService().getUserList()
 
@@ -36,11 +36,11 @@ class AllUserViewModel: UserListViewModel() {
         })
     }
 
-    companion object{
+    companion object {
         private const val TAG = "AllUserViewModel"
     }
 
-    init{
+    init {
         getUsers()
     }
 }

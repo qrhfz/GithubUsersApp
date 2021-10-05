@@ -10,11 +10,16 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class FollowListViewModel(private val username:String, private val listType: FollowListFragment.ListType): UserListViewModel() {
+class FollowListViewModel(
+    private val username: String,
+    private val listType: FollowListFragment.ListType
+) : UserListViewModel() {
     override fun getUsers() {
-        val client = when(listType){
-            FollowListFragment.ListType.FOLLOWERS->ApiConfig.getApiService().getFollowers(username)
-            FollowListFragment.ListType.FOLLOWING->ApiConfig.getApiService().getFollowing(username)
+        val client = when (listType) {
+            FollowListFragment.ListType.FOLLOWERS -> ApiConfig.getApiService()
+                .getFollowers(username)
+            FollowListFragment.ListType.FOLLOWING -> ApiConfig.getApiService()
+                .getFollowing(username)
         }
 
         mIsLoading.value = true
@@ -45,15 +50,16 @@ class FollowListViewModel(private val username:String, private val listType: Fol
         getUsers()
     }
 
-    companion object{
+    companion object {
         private const val TAG = "FollowListViewModel"
     }
 
     @Suppress("UNCHECKED_CAST")
-    class Factory(private val username:String, private val listType: FollowListFragment.ListType): ViewModelProvider.NewInstanceFactory(){
+    class Factory(private val username: String, private val listType: FollowListFragment.ListType) :
+        ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(FollowListViewModel::class.java)){
-                return FollowListViewModel(username,listType) as T
+            if (modelClass.isAssignableFrom(FollowListViewModel::class.java)) {
+                return FollowListViewModel(username, listType) as T
             }
             throw IllegalAccessException("ViewModel class not found")
         }

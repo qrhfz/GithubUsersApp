@@ -3,7 +3,7 @@ package dev.qori.githubusers.settings
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 
-class SettingsViewModel(private val pref: SettingPreferences): ViewModel() {
+class SettingsViewModel(private val pref: SettingPreferences) : ViewModel() {
     fun getThemeSettings(): LiveData<Boolean> {
         return pref.getThemeSetting().asLiveData()
     }

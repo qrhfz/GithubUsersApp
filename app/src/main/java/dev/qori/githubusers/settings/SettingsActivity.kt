@@ -1,16 +1,17 @@
 package dev.qori.githubusers.settings
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
-import dev.qori.githubusers.R
 import dev.qori.githubusers.databinding.ActivitySettingsBinding
+
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+
 class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,11 +25,11 @@ class SettingsActivity : AppCompatActivity() {
             SettingsViewModel::class.java
         )
 
-        viewModel.getThemeSettings().observe(this){
-            if(it){
+        viewModel.getThemeSettings().observe(this) {
+            if (it) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 binding.swNightMode.isChecked = true
-            }else{
+            } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 binding.swNightMode.isChecked = false
             }
