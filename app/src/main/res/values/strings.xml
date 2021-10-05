@@ -121,4 +121,6 @@
     <string name="activate_night_mode">Activate Night Mode</string>
     <string name="night_mode">Night Mode</string>
     <string name="settings">settings</string>
+    <string name="toggle_favourite">Toggle favourite</string>
+    <string name="favorites">favorites</string>
 </resources>

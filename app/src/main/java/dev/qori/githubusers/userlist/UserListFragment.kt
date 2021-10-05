@@ -44,7 +44,7 @@ abstract class UserListFragment : Fragment() {
 
     private val moveToUserDetail: OnItemClickCallback = { user->
         val intent = Intent(activity, UserDetailActivity::class.java)
-        intent.putExtra(UserDetailActivity.EXTRA_USERNAME, user.username)
+        intent.putExtra(UserDetailActivity.EXTRA_USER, user)
         startActivity(intent)
     }
 

@@ -16,6 +16,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import dev.qori.githubusers.allusers.AllUserFragment
+import dev.qori.githubusers.favorites.FavoriteFragment
 import dev.qori.githubusers.search.SearchResultFragment
 import dev.qori.githubusers.settings.SettingPreferences
 import dev.qori.githubusers.settings.SettingsActivity
@@ -75,6 +76,15 @@ class MainActivity : AppCompatActivity() {
             return@setOnMenuItemClickListener true
         }
 
+        menu.findItem(R.id.favorites).setOnMenuItemClickListener {
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.frame_container,FavoriteFragment::class.java, null,FRAGMENT_FAVORITE)
+                addToBackStack(ALL_TO_FAVS)
+                commit()
+            }
+            return@setOnMenuItemClickListener true
+        }
+
         return true
     }
 
@@ -89,17 +99,27 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onBackPressed() {
-        if(supportFragmentManager.findFragmentByTag("FRAGMENT_SEARCH")!=null){
-            Log.d("MainActivity", "Im on fragment search")
-            //supaya kalau back bakal pop hasil pencarian dan kembali menampilkan semua user
-            supportFragmentManager.popBackStack(ALL_TO_SEARCH, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-            title = resources.getString(R.string.app_name)
-        }else{
-            super.onBackPressed()
+        when {
+            supportFragmentManager.findFragmentByTag(FRAGMENT_SEARCH)!=null -> {
+                Log.d("MainActivity", "Im on fragment search")
+                //supaya kalau back bakal pop hasil pencarian dan kembali menampilkan semua user
+                supportFragmentManager.popBackStack(ALL_TO_SEARCH, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                title = resources.getString(R.string.app_name)
+            }
+            supportFragmentManager.findFragmentByTag(FRAGMENT_FAVORITE)!=null -> {
+                supportFragmentManager.popBackStack(ALL_TO_FAVS, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                title = resources.getString(R.string.app_name)
+            }
+            else -> {
+                super.onBackPressed()
+            }
         }
     }
 
     companion object{
         private const val ALL_TO_SEARCH = "ALL_TO_SEARCH"
+        private const val ALL_TO_FAVS = "ALL_TO_FAVS"
+        private const val FRAGMENT_SEARCH = "FRAGMENT_SEARCH"
+        private const val FRAGMENT_FAVORITE = "FRAGMENT_FAVORITE"
     }
 }

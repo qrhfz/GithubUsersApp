@@ -1,7 +1,10 @@
 package dev.qori.githubusers.models
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class UserResponse(
 	@field:SerializedName("login")
 	val username: String? = null,
@@ -26,4 +29,4 @@ data class UserResponse(
 
 	@field:SerializedName("location")
 	val location: String? = null,
-)
+): Parcelable
