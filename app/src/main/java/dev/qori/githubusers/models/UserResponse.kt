@@ -7,7 +7,7 @@ data class UserResponse(
     val username: String,
 
     @field:SerializedName("name")
-    val name: String,
+    val name: String?,
 
     @field:SerializedName("avatar_url")
     val avatarUrl: String,
@@ -22,8 +22,8 @@ data class UserResponse(
     val following: Int,
 
     @field:SerializedName("company")
-    val company: String,
+    val company: String?,
 
     @field:SerializedName("location")
-    val location: String,
+    val location: String?,
 )

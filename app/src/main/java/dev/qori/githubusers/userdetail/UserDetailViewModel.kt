@@ -27,9 +27,6 @@ class UserDetailViewModel(application: Application, private val username: String
     private val _user = MutableLiveData<UserResponse>()
     val user: LiveData<UserResponse> = _user
 
-    private val _errorMessage = MutableLiveData<String>()
-    val errorMessage: LiveData<String> = _errorMessage
-
     private fun getUser() {
         _isLoading.value = true
         val client = ApiConfig.getApiService().getUser(username)
@@ -49,7 +46,6 @@ class UserDetailViewModel(application: Application, private val username: String
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 _isLoading.value = false
                 Log.e(TAG, "onFailure: ${t.message}")
-                _errorMessage.value = t.message
             }
         })
     }

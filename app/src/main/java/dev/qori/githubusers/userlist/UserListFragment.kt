@@ -13,6 +13,7 @@ import dev.qori.githubusers.userdetail.UserDetailActivity
 
 
 abstract class UserListFragment : Fragment() {
+    //view binding pada fragment https://developer.android.com/topic/libraries/view-binding#fragments
     private var _binding: FragmentUserListBinding? = null
     private val binding get() = _binding!!
     private var viewModel: UserListViewModel? = null

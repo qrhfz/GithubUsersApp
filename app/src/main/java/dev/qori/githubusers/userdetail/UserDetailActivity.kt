@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -47,15 +48,23 @@ class UserDetailActivity : AppCompatActivity() {
 
         viewModel.isFavorite.observe(this) {
             if (it) {
-                binding.floatingActionButton.imageTintList =
+                binding.fabFavorite.imageTintList =
                     ColorStateList.valueOf(Color.rgb(255, 0, 0))
             } else {
-                binding.floatingActionButton.imageTintList =
+                binding.fabFavorite.imageTintList =
                     ColorStateList.valueOf(Color.rgb(75, 75, 75))
             }
         }
 
-        binding.floatingActionButton.setOnClickListener {
+        viewModel.isLoading.observe(this){
+            if(it){
+                binding.pbUserDetail.visibility = View.VISIBLE
+            }else{
+                binding.pbUserDetail.visibility = View.GONE
+            }
+        }
+
+        binding.fabFavorite.setOnClickListener {
             username?.let { it1 -> viewModel.toggleFavorite(it1) }
         }
 
@@ -81,13 +90,13 @@ class UserDetailActivity : AppCompatActivity() {
             .load(user.avatarUrl) // URL Gambar
             .circleCrop() // Mengubah image menjadi lingkaran
             .into(binding.civDetailAvatar)
-        binding.tvDetailName.text = if (user.name.isNotEmpty()) user.name else "-"
+        binding.tvDetailName.text = user.name?:"-"
         binding.tvDetailUsername.text = user.username
         binding.tvDetailFollower.text = user.followers.toString()
         binding.tvDetailFollowing.text = user.following.toString()
         binding.tvDetailRepository.text = user.repos.toString()
-        binding.tvDetailLocation.text = if (user.location.isNotEmpty()) user.location else "-"
-        binding.tvDetailCompany.text = if (user.company.isNotEmpty()) user.company else "-"
+        binding.tvDetailLocation.text = user.location?:"-"
+        binding.tvDetailCompany.text = user.company?: "-"
     }
 
 
