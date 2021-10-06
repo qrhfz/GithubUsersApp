@@ -7,31 +7,148 @@
     tools:context=".userdetail.UserDetailActivity">
 
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabFavorite"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civDetailAvatar"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/user1" />
+
+    <TextView
+        android:id="@+id/tvDetailUsername"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="8dp"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/civDetailAvatar"
+        app:layout_constraintTop_toTopOf="@+id/civDetailAvatar"
+        tools:text="Username" />
+
+    <TextView
+        android:id="@+id/tvDetailName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="@+id/tvDetailUsername"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailUsername"
+        tools:text="Full name" />
+
+    <TextView
+        android:id="@+id/tvDetailCompany"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:drawablePadding="2dp"
+        app:drawableStartCompat="@drawable/ic_work"
+        app:drawableTint="?android:attr/textColorPrimary"
+        app:layout_constraintStart_toStartOf="@+id/tvDetailName"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailName"
+        tools:text="Universitas Dian Nuswantoro" />
+
+    <TextView
+        android:id="@+id/tvDetailLocation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:drawablePadding="2dp"
+        app:drawableStartCompat="@drawable/ic_location"
+        app:drawableTint="?android:attr/textColorPrimary"
+        app:layout_constraintStart_toStartOf="@+id/tvDetailCompany"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailCompany"
+        tools:text="Semarang, Jawa Tengah" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnShare"
+        style="@style/MyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/white"
-        android:clickable="true"
-        android:contentDescription="@string/toggle_favourite"
-        android:focusable="true"
-        android:src="@drawable/ic_favorite"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@color/grey" />
+        android:layout_marginTop="8dp"
+        android:text="@string/share"
+        app:icon="@drawable/ic_share"
+        app:layout_constraintStart_toStartOf="@+id/tvDetailLocation"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailLocation"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/tvDetailFollower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/tvDetailFollowingLabel"
+        app:layout_constraintTop_toTopOf="@+id/tvDetailFollowingLabel"
+        tools:text="123" />
+
+    <TextView
+        android:id="@+id/tvDetailFollowerLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:text="@string/followers"
+        app:layout_constraintEnd_toStartOf="@+id/tvDetailFollower"
+        app:layout_constraintTop_toTopOf="@+id/tvDetailFollower" />
+
+    <TextView
+        android:id="@+id/tvDetailFollowing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/tvDetailFollowingLabel"
+        app:layout_constraintTop_toTopOf="@+id/tvDetailFollowingLabel"
+        tools:text="123" />
+
+    <TextView
+        android:id="@+id/tvDetailFollowingLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/following"
+        app:layout_constraintStart_toStartOf="@+id/btnShare"
+        app:layout_constraintTop_toBottomOf="@+id/btnShare" />
+
+    <TextView
+        android:id="@+id/tvDetailRepository"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/tvDetailRepositoryLabel"
+        app:layout_constraintTop_toTopOf="@+id/tvDetailRepositoryLabel"
+        tools:text="123" />
+
+    <TextView
+        android:id="@+id/tvDetailRepositoryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@string/repositories"
+        app:layout_constraintStart_toEndOf="@+id/tvDetailFollowing"
+        app:layout_constraintTop_toTopOf="@+id/tvDetailFollowing" />
 
     <ProgressBar
         android:id="@+id/pbUserDetail"
         style="?android:attr/progressBarStyle"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/civDetailAvatar"
+        app:layout_constraintEnd_toEndOf="@+id/civDetailAvatar"
+        app:layout_constraintStart_toStartOf="@+id/civDetailAvatar"
+        app:layout_constraintTop_toTopOf="@+id/civDetailAvatar" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/groupUserDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/clUserData"
-        app:layout_constraintEnd_toEndOf="@+id/clUserData"
-        app:layout_constraintStart_toStartOf="@+id/clUserData"
-        app:layout_constraintTop_toTopOf="@+id/clUserData" />
+        app:constraint_referenced_ids="civDetailAvatar,tvDetailFollowing,tvDetailFollower,tvDetailLocation,tvDetailCompany,tvDetailRepository,tvDetailFollowerLabel,tvDetailName,btnShare,tvDetailFollowingLabel,tvDetailRepositoryLabel,tvDetailUsername"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clUserData"
@@ -39,164 +156,9 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/civDetailAvatar"
-            android:layout_width="128dp"
-            android:layout_height="128dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/user1" />
-
-        <TextView
-            android:id="@+id/tvDetailUsername"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-
-            android:textSize="21sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/civDetailAvatar"
-            app:layout_constraintTop_toTopOf="@+id/civDetailAvatar"
-            tools:text="Username" />
-
-        <TextView
-            android:id="@+id/tvDetailLocation"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:drawablePadding="2dp"
-            app:drawableStartCompat="@drawable/ic_location"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tvDetailCompany"
-            app:layout_constraintTop_toBottomOf="@+id/tvDetailCompany"
-            tools:text="Semarang, Jawa Tengah" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnShare"
-            style="@style/LightGreenMaterialButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/share"
-            app:icon="@drawable/ic_share"
-            app:layout_constraintStart_toStartOf="@+id/tvDetailLocation"
-            app:layout_constraintTop_toBottomOf="@+id/tvDetailLocation" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnShare">
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/tvDetailFollower"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                tools:text="123" />
-
-            <Space
-                android:layout_width="4dp"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/tvDetailFollowerLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/followers" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/tvDetailFollowing"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                tools:text="123" />
-
-            <Space
-                android:layout_width="4dp"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/tvDetailFollowingLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/following" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/tvDetailRepository"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                tools:text="123" />
-
-            <Space
-                android:layout_width="4dp"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/tvDetailRepositoryLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/repositories" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvDetailName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tvDetailUsername"
-            app:layout_constraintTop_toBottomOf="@+id/tvDetailUsername"
-            tools:text="Full name" />
-
-        <TextView
-            android:id="@+id/tvDetailCompany"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:drawablePadding="2dp"
-            app:drawableStartCompat="@drawable/ic_work"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tvDetailName"
-            app:layout_constraintTop_toBottomOf="@+id/tvDetailName"
-            tools:text="Universitas Dian Nuswantoro" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -204,10 +166,12 @@
         android:id="@+id/tabLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:contentDescription="@string/follower_following"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clUserData" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailFollowerLabel" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vpUserList"
@@ -216,8 +180,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout" >
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout">
 
     </androidx.viewpager2.widget.ViewPager2>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/white"
+        android:clickable="true"
+        android:contentDescription="@string/toggle_favourite"
+        android:focusable="true"
+        android:src="@drawable/ic_favorite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/grey" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

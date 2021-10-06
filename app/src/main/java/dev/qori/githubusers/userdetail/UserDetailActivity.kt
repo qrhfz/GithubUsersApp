@@ -59,8 +59,10 @@ class UserDetailActivity : AppCompatActivity() {
         viewModel.isLoading.observe(this){
             if(it){
                 binding.pbUserDetail.visibility = View.VISIBLE
+                binding.groupUserDetail.visibility = View.INVISIBLE
             }else{
                 binding.pbUserDetail.visibility = View.GONE
+                binding.groupUserDetail.visibility = View.VISIBLE
             }
         }
 
