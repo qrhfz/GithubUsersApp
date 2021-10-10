@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.getInstance
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import dev.qori.githubusers.databinding.ActivityUserDetailBinding

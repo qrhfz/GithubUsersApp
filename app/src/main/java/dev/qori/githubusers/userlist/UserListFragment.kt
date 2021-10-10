@@ -26,13 +26,19 @@ abstract class UserListFragment : Fragment() {
         val view = binding.root
 
         viewModel = getViewModel()
+        return view
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val rvUser = binding.rvUser
         val progressBar = binding.progressBar
         rvUser.layoutManager = LinearLayoutManager(activity)
+        val adapter = UserListAdapter(listOf(), moveToUserDetail)
+        rvUser.adapter = adapter
 
         viewModel?.users?.observe(viewLifecycleOwner) {
-            rvUser.adapter = UserListAdapter(it, moveToUserDetail)
+            adapter.setData(it)
         }
 
         viewModel?.isLoading?.observe(viewLifecycleOwner) {
@@ -48,7 +54,6 @@ abstract class UserListFragment : Fragment() {
                 Toast.makeText(activity, err, Toast.LENGTH_LONG).show()
             }
         }
-        return view
     }
 
     private val moveToUserDetail: OnItemClickCallback = { user ->
@@ -61,6 +66,7 @@ abstract class UserListFragment : Fragment() {
 
     override fun onDestroy() {
         _binding = null
+        viewModel = null
         super.onDestroy()
     }
 }

@@ -46,5 +46,8 @@ class UserListAdapter(
 
     override fun getItemCount(): Int = users.size
 
-
+    fun setData(users: List<UserResponse>){
+        this.users = users
+        notifyDataSetChanged()
+    }
 }
